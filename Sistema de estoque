@@ -28,14 +28,14 @@ float calcularEstoque(Item *estoque, int qtdItens)
 
 int main()
 {
- setlocale(LC_ALL, "Portuguese")
+ setlocale(LC_ALL, "Portuguese");
  
  int qtdItens;
  float valorTotal;
 
  printf("***************************************\n");
  printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
- print("****************************************\n");
+ printf("****************************************\n");
 
  printf("informe a quantidade de itens: ");
  scanf("%d",&qtdItens);
@@ -63,7 +63,7 @@ for (int i = 0; i < qtdItens; i++)
     scanf("%d", &(estoque + i)->quantidade);
 
     printf("Preco unitario: ");
-    scanf("%f", (&estoque + i)->preco);
+    scanf("%f", &(estoque + i)->preco);
 
 }
 //processamento
@@ -85,7 +85,7 @@ for (int i = 0; i < qtdItens; i++)
     printf("\nItem: %s\n", (estoque + i)->nome);
     printf("Quandidade: %d\n",(estoque + i)->quantidade);
     printf("Preco Unitario: R$ %.2f\n",(estoque + i)->preco);
-    printf("Subtotal: R$ %.2f\n", subtotal):
+    printf("Subtotal: R$ %.2f\n", subtotal);
 
 }
 
