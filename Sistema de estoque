@@ -26,6 +26,15 @@ float calcularEstoque(Item *estoque, int qtdItens)
     return total;
 }
 
+void limparBufferEntrada()
+{
+    int caractere;
+
+    while ((caractere = getchar()) != '\n' && caractere != EOF)
+    {
+    }
+}
+    
 int main()
 {
  setlocale(LC_ALL, "Portuguese");
@@ -38,17 +47,18 @@ int main()
  printf("****************************************\n");
 
  printf("informe a quantidade de itens: ");
-  if (scanf("%d",&qtdItens) != 1 || qtdItens <= 0)
+  while (scanf("%d",&qtdItens) != 1 || qtdItens <= 0)
 {
-    printf("Quantidade de Ites Invalida!\n");
-    return 1;
+    printf("Quantidade de itens invalida!\n");
+    limparBufferEntrada();
+    printf("informe a quantidade de itens: ");
 }
 
 //Locação 
 
 Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
 
-if (estoque == NULL)
+while (estoque == NULL)
 {
     printf("Erro ao alocar memoria!\n");
     return 1;
@@ -64,21 +74,21 @@ for (int i = 0; i < qtdItens; i++)
     scanf(" %49[^\n]", (estoque + i)->nome);
 
     printf("Quantidade: ");
-    if (scanf("%d", &(estoque + i)->quantidade) != 1 ||
+    while (scanf("%d", &(estoque + i)->quantidade) != 1 ||
         (estoque + i)->quantidade < 0)
         {
             printf("Quantidade invalida! Nao pode ser negativa.\n");
-            free(estoque);
-            return 1;
+            limparBufferEntrada();
+            printf("Quantidade: ");
         }
     
-    printf("Preco unutario (R$ - use virgula para centavos): ");
-    if (scanf("%f", &(estoque + i)->preco) != 1 || 
+    printf("Preco unitario (R$ - use virgula para centavos): ");
+    while (scanf("%f", &(estoque + i)->preco) != 1 || 
         (estoque + i)->preco < 0)
         {
-            printf("Preco invalido! Nao pode ser negarivo.\n");
-            free(estoque);
-            return 1;
+            printf("Preco invalido! Nao pode ser negativo.\n");
+            limparBufferEntrada();
+            printf("Preco untario (R$ - use virgula para centavos): ");
         }
 
 }
