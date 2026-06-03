@@ -11,3 +11,17 @@ typedef struct
     float preco;
 
 } Item;
+
+//Função para calcular o valor total do estoque 
+
+float calcularEstoque(Item *estoque, int qtdItens)
+{
+    float total = 0.0;
+
+    for (int i = 0; i < qtdItens; i++)
+    {
+        total += (estoque + i) -> quantidade *
+                (estoque + i) -> preco;
+    }
+    return total;
+}
