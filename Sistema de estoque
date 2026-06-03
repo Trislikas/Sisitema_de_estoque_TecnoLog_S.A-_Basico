@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+//Armazenar os dados de cada item
+
+typedef struct
+{
+    char nome[50];
+    int  quantidade;
+    float preco;
+
+} Item;
