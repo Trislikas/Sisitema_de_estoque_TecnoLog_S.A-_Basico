@@ -25,3 +25,20 @@ float calcularEstoque(Item *estoque, int qtdItens)
     }
     return total;
 }
+
+int main()
+{
+ setlocale(LC_ALL, "Portuguese")
+ 
+ int qtdItens;
+ float valorTotal;
+
+ printf("***************************************\n");
+ printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
+ print("****************************************\n");
+
+ printf("informe a quantidade de itens: ");
+ scanf("%d",&qtdItens);
+
+//Locação j
+}
