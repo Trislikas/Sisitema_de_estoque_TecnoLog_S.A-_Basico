@@ -40,5 +40,15 @@ int main()
  printf("informe a quantidade de itens: ");
  scanf("%d",&qtdItens);
 
-//Locação j
+//Locação 
+
+Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
+
+if (estoque == NULL)
+{
+    printf("Erro ao alocar memoria!\n");
+    return 1;
+}
+
+//
 }
