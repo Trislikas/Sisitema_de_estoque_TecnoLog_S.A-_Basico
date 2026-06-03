@@ -57,12 +57,12 @@ for (int i = 0; i < qtdItens; i++)
     printf("\n *** Item %d ***\n", i + 1);
 
     printf("Nome: ");
-    scanf(" %[^\n]", (estoque + i)->nome);
+    scanf(" %49[^\n]", (estoque + i)->nome);
 
     printf("Quantidade: ");
     scanf("%d", &(estoque + i)->quantidade);
 
-    printf("Preco unitario: ");
+    printf("Preco unitario (R$): ");
     scanf("%f", &(estoque + i)->preco);
 
 }
@@ -83,7 +83,7 @@ for (int i = 0; i < qtdItens; i++)
         (estoque + i)->preco;
 
     printf("\nItem: %s\n", (estoque + i)->nome);
-    printf("Quandidade: %d\n",(estoque + i)->quantidade);
+    printf("Quantidade: %d\n",(estoque + i)->quantidade);
     printf("Preco Unitario: R$ %.2f\n",(estoque + i)->preco);
     printf("Subtotal: R$ %.2f\n", subtotal);
 
