@@ -50,5 +50,21 @@ if (estoque == NULL)
     return 1;
 }
 
-//
+//Entrada 1° de dados 
+
+for (int i = 0; i < qtdItens; i++)
+{
+    printf("\n *** Item %d ***\n", i + 1);
+
+    printf("Nome: ");
+    scanf(" %[^\n]", (estoque + i)->nome);
+
+    printf("Quantidade: ");
+    scanf("%d", &(estoque + i)->quantidade);
+
+    printf("Preco unitario: ");
+    scanf("%f", (&estoque + i)->preco);
+    
+}
+
 }
