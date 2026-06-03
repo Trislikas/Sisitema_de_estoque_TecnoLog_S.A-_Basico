@@ -38,7 +38,11 @@ int main()
  printf("****************************************\n");
 
  printf("informe a quantidade de itens: ");
- scanf("%d",&qtdItens);
+  if (scanf("%d",&qtdItens) != 1 || qtdItens <= 0)
+{
+    printf("Quantidade de Ites Invalida!\n");
+    return 1;
+}
 
 //Locação 
 
@@ -60,10 +64,22 @@ for (int i = 0; i < qtdItens; i++)
     scanf(" %49[^\n]", (estoque + i)->nome);
 
     printf("Quantidade: ");
-    scanf("%d", &(estoque + i)->quantidade);
-
-    printf("Preco unitario (R$): ");
-    scanf("%f", &(estoque + i)->preco);
+    if (scanf("%d", &(estoque + i)->quantidade) != 1 ||
+        (estoque + i)->quantidade < 0)
+        {
+            printf("Quantidade invalida! Nao pode ser negativa.\n");
+            free(estoque);
+            return 1;
+        }
+    
+    printf("Preco unutario (R$ - use virgula para centavos): ");
+    if (scanf("%f", &(estoque + i)->preco) != 1 || 
+        (estoque + i)->preco < 0)
+        {
+            printf("Preco invalido! Nao pode ser negarivo.\n");
+            free(estoque);
+            return 1;
+        }
 
 }
 //processamento
