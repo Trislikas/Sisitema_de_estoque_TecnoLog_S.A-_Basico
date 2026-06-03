@@ -64,7 +64,40 @@ for (int i = 0; i < qtdItens; i++)
 
     printf("Preco unitario: ");
     scanf("%f", (&estoque + i)->preco);
-    
+
 }
+//processamento
+
+valorTotal = calcularEstoque(estoque, qtdItens);
+
+//relatorio
+
+printf("\n*****************************\n");
+printf(" RELATORIO DE ESTOQUE\n");
+printf("\n*****************************\n");
+
+for (int i = 0; i < qtdItens; i++)
+{
+    float subtotal =
+        (estoque + i)->quantidade *
+        (estoque + i)->preco;
+
+    printf("\nItem: %s\n", (estoque + i)->nome);
+    printf("Quandidade: %d\n",(estoque + i)->quantidade);
+    printf("Preco Unitario: R$ %.2f\n",(estoque + i)->preco);
+    printf("Subtotal: R$ %.2f\n", subtotal):
+
+}
+
+printf("\n*****************************\n");
+printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
+printf("\n*****************************\n");
+
+//zera
+
+free(estoque);
+
+return 0;
+
 
 }
