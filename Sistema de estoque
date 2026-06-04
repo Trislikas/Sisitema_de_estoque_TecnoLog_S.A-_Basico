@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <string.h>
+#include <ctype.h>
 
 //Armazenar os dados de cada item
 
@@ -13,7 +13,7 @@ typedef struct
 
 } Item;
 
-//Função para calcular o valor total do estoque 
+//Função para calcular o valor total do estoque
 
 float calcularEstoque(Item *estoque, int qtdItens)
 {
@@ -21,9 +21,10 @@ float calcularEstoque(Item *estoque, int qtdItens)
 
     for (int i = 0; i < qtdItens; i++)
     {
-        total += (estoque + i) -> quantidade *
-                (estoque + i) -> preco;
+        total += (estoque + i)->quantidade *
+                 (estoque + i)->preco;
     }
+
     return total;
 }
 
@@ -35,101 +36,147 @@ void limparBufferEntrada()
     {
     }
 }
-    
-int main()
+
+int converterPreco(char entradaPreco[], float *preco)
 {
- setlocale(LC_ALL, "Portuguese");
- 
- int qtdItens;
- float valorTotal;
+    float valor = 0.0;
+    float decimal = 0.1;
+    int separador = 0;
+    int temDigito = 0;
+    int temDigitoDepoisSeparador = 0;
 
- printf("***************************************\n");
- printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
- printf("****************************************\n");
+    if (entradaPreco[0] == '-' || entradaPreco[0] == '\0')
+    {
+        return 0;
+    }
 
- printf("informe a quantidade de itens: ");
-  while (scanf("%d",&qtdItens) != 1 || qtdItens <= 0)
-{
-    printf("Quantidade de itens invalida!\n");
-    limparBufferEntrada();
-    printf("informe a quantidade de itens: ");
-}
+    for (int i = 0; entradaPreco[i] != '\0'; i++)
+    {
+        if (isdigit((unsigned char)entradaPreco[i]))
+        {
+            temDigito = 1;
 
-//Locação 
+            if (separador)
+            {
+                temDigitoDepoisSeparador = 1;
+                valor += (entradaPreco[i] - '0') * decimal;
+                decimal /= 10;
+            }
+            else
+            {
+                valor = valor * 10 + (entradaPreco[i] - '0');
+            }
+        }
+        else if (entradaPreco[i] == ',' || entradaPreco[i] == '.')
+        {
+            if (separador)
+            {
+                return 0;
+            }
 
-Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
+            separador = 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-if (estoque == NULL)
-{
-    printf("Erro ao alocar memoria!\n");
+    if (!temDigito || (separador && !temDigitoDepoisSeparador))
+    {
+        return 0;
+    }
+
+    *preco = valor;
     return 1;
 }
 
-//Entrada 1° de dados 
-
-for (int i = 0; i < qtdItens; i++)
+int main()
 {
-    printf("\n *** Item %d ***\n", i + 1);
+    setlocale(LC_ALL, "Portuguese");
 
-    printf("Nome: ");
-    scanf(" %49[^\n]", (estoque + i)->nome);
+    int qtdItens;
+    float valorTotal;
 
-    printf("Quantidade: ");
-    while (scanf("%d", &(estoque + i)->quantidade) != 1 ||
-        (estoque + i)->quantidade < 0)
+    printf("***************************************\n");
+    printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
+    printf("****************************************\n");
+
+    printf("informe a quantidade de itens: ");
+    while (scanf("%d", &qtdItens) != 1 || qtdItens <= 0)
+    {
+        printf("Quantidade de itens invalida!\n");
+        limparBufferEntrada();
+        printf("informe a quantidade de itens: ");
+    }
+
+    //Alocação
+
+    Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
+
+    if (estoque == NULL)
+    {
+        printf("Erro ao alocar memoria!\n");
+        return 1;
+    }
+
+    //Entrada de dados
+
+    for (int i = 0; i < qtdItens; i++)
+    {
+        char entradaPreco[20];
+
+        printf("\n *** Item %d ***\n", i + 1);
+
+        printf("Nome: ");
+        scanf(" %49[^\n]", (estoque + i)->nome);
+
+        printf("Quantidade: ");
+        while (scanf("%d", &(estoque + i)->quantidade) != 1 ||
+               (estoque + i)->quantidade < 0)
         {
             printf("Quantidade invalida! Nao pode ser negativa.\n");
             limparBufferEntrada();
             printf("Quantidade: ");
         }
-    
-        char entradaPreco[20];
-        char caractereExtra;
 
-    printf("Preco unitario (R$ - use virgula para centavos): ");
-    while (scanf("%19s", entradaPreco) != 1 || 
-           strchr (entradaPreco, '.') != NULL ||
-           sscanf(entradaPreco, "%f%c", &(estoque + i)->preco, &caractereExtra) != 1 ||
-           (estoque + i)->preco < 0)
+        printf("Preco unitario (R$ - use virgula ou ponto para centavos): ");
+        while (scanf("%19s", entradaPreco) != 1 ||
+               converterPreco(entradaPreco, &(estoque + i)->preco) == 0)
         {
-            printf("Preco invalido! Use virgula e nao use valor negativo.\n");
+            printf("Preco invalido! Use valor positivo, exemplo: 10,50 ou 10.50.\n");
             limparBufferEntrada();
-            printf("Preco untario (R$ - use virgula para centavos): ");
+            printf("Preco unitario (R$ - use virgula ou ponto para centavos): ");
         }
+    }
 
-}
-//processamento
+    //Processamento
 
-valorTotal = calcularEstoque(estoque, qtdItens);
+    valorTotal = calcularEstoque(estoque, qtdItens);
 
-//relatorio
+    //Relatório
 
-printf("\n*****************************\n");
-printf(" RELATORIO DE ESTOQUE\n");
-printf("\n*****************************\n");
+    printf("\n*****************************\n");
+    printf(" RELATORIO DE ESTOQUE\n");
+    printf("\n*****************************\n");
 
-for (int i = 0; i < qtdItens; i++)
-{
-    float subtotal =
-        (estoque + i)->quantidade *
-        (estoque + i)->preco;
+    for (int i = 0; i < qtdItens; i++)
+    {
+        float subtotal =
+            (estoque + i)->quantidade *
+            (estoque + i)->preco;
 
-    printf("\nItem: %s\n", (estoque + i)->nome);
-    printf("Quantidade: %d\n",(estoque + i)->quantidade);
-    printf("Preco Unitario: R$ %.2f\n",(estoque + i)->preco);
-    printf("Subtotal: R$ %.2f\n", subtotal);
+        printf("\nItem: %s\n", (estoque + i)->nome);
+        printf("Quantidade: %d\n", (estoque + i)->quantidade);
+        printf("Preco Unitario: R$ %.2f\n", (estoque + i)->preco);
+        printf("Subtotal: R$ %.2f\n", subtotal);
+    }
 
-}
+    printf("\n*****************************\n");
+    printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
+    printf("\n*****************************\n");
 
-printf("\n*****************************\n");
-printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
-printf("\n*****************************\n");
+    free(estoque);
 
-//zera
-
-free(estoque);
-
-return 0;
-
-
+    return 0;
 }
