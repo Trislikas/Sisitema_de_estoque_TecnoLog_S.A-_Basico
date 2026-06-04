@@ -3,7 +3,9 @@
 #include <locale.h>
 #include <ctype.h>
 
-//Armazenar os dados de cada item
+/*Foi utilizada uma struct para agrupar informações
+    relacionadas a uma mercadoria, como nome,
+    quantidade e preço unitário.*/
 
 typedef struct
 {
@@ -13,7 +15,16 @@ typedef struct
 
 } Item;
 
-//Função para calcular o valor total do estoque
+/*
+    Função responsável por calcular o valor total
+    do estoque.
+
+    Recebe um ponteiro para o vetor de itens e a
+    quantidade de itens cadastrados.
+
+    A função utiliza aritmética de ponteiros para
+    acessar cada posição da memória alocada.
+*/
 
 float calcularEstoque(Item *estoque, int qtdItens)
 {
@@ -110,7 +121,17 @@ int main()
         printf("informe a quantidade de itens: ");
     }
 
-    //Alocação
+    /*
+    Alocação dinâmica de memória.
+
+    A quantidade de itens é informada pelo usuário
+    durante a execução do programa. Por esse motivo,
+    não é possível definir previamente o tamanho
+    do vetor.
+
+    A função malloc reserva na memória espaço
+    suficiente para armazenar todos os itens.
+*/
 
     Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
 
@@ -120,7 +141,13 @@ int main()
         return 1;
     }
 
-    //Entrada de dados
+    /*
+    Cadastro dos produtos.
+
+    Os dados informados pelo usuário são armazenados
+    na memória utilizando ponteiros e aritmética
+    de ponteiros.
+*/
 
     for (int i = 0; i < qtdItens; i++)
     {
@@ -176,7 +203,49 @@ int main()
     printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
     printf("\n*****************************\n");
 
+/*
+    Libera a memória alocada dinamicamente.
+
+    Essa etapa é importante para evitar
+    desperdício de memória durante a execução
+    do programa.
+*/
+
     free(estoque);
 
     return 0;
 }
+
+/*
+                GESTÃO DE ESTOQUE - TecnoLog S.A.
+
+                              |
+    -------------------------------------------------------
+    |                     |                   |           |
+  Struct             Ponteiros           Funções    Alocação
+    |                     |                   |       Dinâmica
+    |                     |                   |           |
+ Nome               Item *estoque     calcularEstoque() malloc()
+ Quantidade              |                   |           |
+ Preço              estoque + i        Valor Total      free()
+                           |
+                      Operador ->
+                           |
+                  Acesso aos membros
+
+                              |
+                       Processamento
+                              |
+                Quantidade × Preço Unitário
+                              |
+                      Soma dos Subtotais
+                              |
+                   Valor Total do Estoque
+
+                              |
+                         Validações
+                              |
+          -----------------------------------------
+          |                    |                  |
+   Quantidade > 0      Preço válido      Entrada correta
+*/
