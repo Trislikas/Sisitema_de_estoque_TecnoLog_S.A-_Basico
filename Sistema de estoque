@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
 //Armazenar os dados de cada item
 
@@ -58,7 +59,7 @@ int main()
 
 Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
 
-while (estoque == NULL)
+if (estoque == NULL)
 {
     printf("Erro ao alocar memoria!\n");
     return 1;
@@ -82,11 +83,16 @@ for (int i = 0; i < qtdItens; i++)
             printf("Quantidade: ");
         }
     
+        char entradaPreco[20];
+        char caractereExtra;
+
     printf("Preco unitario (R$ - use virgula para centavos): ");
-    while (scanf("%f", &(estoque + i)->preco) != 1 || 
-        (estoque + i)->preco < 0)
+    while (scanf("%19s", entradaPreco) != 1 || 
+           strchr (entradaPreco, '.') != NULL ||
+           sscanf(entradaPreco, "%f%c", &(estoque + i)->preco, &caractereExtra) != 1 ||
+           (estoque + i)->preco < 0)
         {
-            printf("Preco invalido! Nao pode ser negativo.\n");
+            printf("Preco invalido! Use virgula e nao use valor negativo.\n");
             limparBufferEntrada();
             printf("Preco untario (R$ - use virgula para centavos): ");
         }
