@@ -48,6 +48,22 @@ void limparBufferEntrada()
     }
 }
 
+int lerQuantidadeValida(char mensagem[], int valorMinimo, char mensagemErro[])
+{
+    int quantidade;
+
+    printf("%s", mensagem);
+
+    while (scanf("%d", &quantidade) != 1 || quantidade < valorMinimo)
+    {
+        printf("%s\n", mensagemErro);
+        limparBufferEntrada();
+        printf("%s", mensagem);
+    }
+
+    return quantidade;
+}
+
 int converterPreco(char entradaPreco[], float *preco)
 {
     float valor = 0.0;
@@ -102,86 +118,34 @@ int converterPreco(char entradaPreco[], float *preco)
     return 1;
 }
 
-int main()
+void cadastrarItem(Item *item, int numeroItem)
 {
-    setlocale(LC_ALL, "Portuguese");
+    char entradaPreco[20];
 
-    int qtdItens;
-    float valorTotal;
+    printf("\n *** Item %d ***\n", numeroItem);
 
-    printf("***************************************\n");
-    printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
-    printf("****************************************\n");
+    printf("Nome: ");
+    scanf(" %49[^\n]", item->nome);
 
-    printf("informe a quantidade de itens: ");
-    while (scanf("%d", &qtdItens) != 1 || qtdItens <= 0)
+    item->quantidade = lerQuantidadeValida(
+        "Quantidade: ",
+        0,
+        "Quantidade invalida! Nao pode ser negativa."
+    );
+
+    printf("Preco unitario (R$ - use virgula ou ponto para centavos): ");
+    while (scanf("%19s", entradaPreco) != 1 ||
+           converterPreco(entradaPreco, &item->preco) == 0)
     {
-        printf("Quantidade de itens invalida!\n");
+        printf("Preco invalido! Use valor positivo, exemplo: 10,50 ou 10.50.\n");
         limparBufferEntrada();
-        printf("informe a quantidade de itens: ");
-    }
-
-    /*
-    Alocação dinâmica de memória.
-
-    A quantidade de itens é informada pelo usuário
-    durante a execução do programa. Por esse motivo,
-    não é possível definir previamente o tamanho
-    do vetor.
-
-    A função malloc reserva na memória espaço
-    suficiente para armazenar todos os itens.
-*/
-
-    Item *estoque = (Item *)malloc(qtdItens * sizeof(Item));
-
-    if (estoque == NULL)
-    {
-        printf("Erro ao alocar memoria!\n");
-        return 1;
-    }
-
-    /*
-    Cadastro dos produtos.
-
-    Os dados informados pelo usuário são armazenados
-    na memória utilizando ponteiros e aritmética
-    de ponteiros.
-*/
-
-    for (int i = 0; i < qtdItens; i++)
-    {
-        char entradaPreco[20];
-
-        printf("\n *** Item %d ***\n", i + 1);
-
-        printf("Nome: ");
-        scanf(" %49[^\n]", (estoque + i)->nome);
-
-        printf("Quantidade: ");
-        while (scanf("%d", &(estoque + i)->quantidade) != 1 ||
-               (estoque + i)->quantidade < 0)
-        {
-            printf("Quantidade invalida! Nao pode ser negativa.\n");
-            limparBufferEntrada();
-            printf("Quantidade: ");
-        }
-
         printf("Preco unitario (R$ - use virgula ou ponto para centavos): ");
-        while (scanf("%19s", entradaPreco) != 1 ||
-               converterPreco(entradaPreco, &(estoque + i)->preco) == 0)
-        {
-            printf("Preco invalido! Use valor positivo, exemplo: 10,50 ou 10.50.\n");
-            limparBufferEntrada();
-            printf("Preco unitario (R$ - use virgula ou ponto para centavos): ");
-        }
     }
+}
 
-    //Processamento
-
-    valorTotal = calcularEstoque(estoque, qtdItens);
-
-    //Relatório
+void exibirRelatorio(Item *estoque, int qtdItens)
+{
+    float valorTotal = calcularEstoque(estoque, qtdItens);
 
     printf("\n*****************************\n");
     printf(" RELATORIO DE ESTOQUE\n");
@@ -202,13 +166,114 @@ int main()
     printf("\n*****************************\n");
     printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
     printf("\n*****************************\n");
+}
+
+int lerOpcaoMenu()
+{
+    int opcao;
+
+    printf("\n***************************************\n");
+    printf(" SISTEMA DE ESTOQUE TecnoLog S.A\n");
+    printf("****************************************\n");
+    printf("1 - Cadastrar estoque\n");
+    printf("2 - Exibir relatorio\n");
+    printf("0 - Sair\n");
+    printf("Escolha uma opcao: ");
+
+    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 2)
+    {
+        printf("Opcao invalida!\n");
+        limparBufferEntrada();
+        printf("Escolha uma opcao: ");
+    }
+
+    return opcao;
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Portuguese");
+
+    int qtdItens = 0;
+    int opcao;
+    Item *estoque = NULL;
+
+    do
+    {
+        opcao = lerOpcaoMenu();
+
+        switch (opcao)
+        {
+        case 1:
+            if (estoque != NULL)
+            {
+                free(estoque);
+                estoque = NULL;
+                qtdItens = 0;
+            }
+
+            qtdItens = lerQuantidadeValida(
+                "informe a quantidade de itens: ",
+                1,
+                "Quantidade de itens invalida!"
+            );
+
+            /*
+            Alocação dinâmica de memória.
+
+            A quantidade de itens é informada pelo usuário
+            durante a execução do programa. Por esse motivo,
+            não é possível definir previamente o tamanho
+            do vetor.
+
+            A função malloc reserva na memória espaço
+            suficiente para armazenar todos os itens.
+        */
+
+            estoque = (Item *)malloc(qtdItens * sizeof(Item));
+
+            if (estoque == NULL)
+            {
+                printf("Erro ao alocar memoria!\n");
+                return 1;
+            }
+
+            /*
+            Cadastro dos produtos.
+
+            Os dados informados pelo usuário são armazenados
+            na memória utilizando ponteiros e aritmética
+            de ponteiros.
+        */
+
+            for (int i = 0; i < qtdItens; i++)
+            {
+                cadastrarItem(estoque + i, i + 1);
+            }
+
+            printf("\nCadastro realizado com sucesso!\n");
+            break;
+
+        case 2:
+            if (estoque == NULL || qtdItens == 0)
+            {
+                printf("\nNenhum item cadastrado. Use a opcao 1 primeiro.\n");
+            }
+            else
+            {
+                exibirRelatorio(estoque, qtdItens);
+            }
+            break;
+
+        case 0:
+            printf("\nEncerrando o sistema...\n");
+            break;
+        }
+
+    } while (opcao != 0);
 
 /*
     Libera a memória alocada dinamicamente.
-
-    Essa etapa é importante para evitar
-    desperdício de memória durante a execução
-    do programa.
 */
 
     free(estoque);
