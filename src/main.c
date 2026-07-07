@@ -21,34 +21,37 @@ int main()
         {
         case 1:
 
-            if (estoque != NULL)
-            {
-                free(estoque);
-                estoque = NULL;
-                qtdItens = 0;
-            }
-
-            qtdItens = lerQuantidadeValida(
-                "Informe a quantidade de itens: ",
+            novosItens = lerQuantidadeValida(
+                "Qauntos produtos deseja cadastrar? ",
                 1,
-                "Quantidade de itens invalida!"
+                "Quantidade invalida!"
             );
 
-            estoque = (Item *)malloc(qtdItens * sizeof(Item));
-
-            if (estoque == NULL)
+            Item *temp = realloc(
+                estoque,
+                (qtdItens + novosItens) * sizeof(Item)
+            );
+            
+            if (temp == NULL)
             {
-                printf("Erro ao alocar memoria!\n");
-                return 1;
+                printf("\nErro ao alocar memoria.\n");
+                break;
             }
 
-            for (int i = 0; i < qtdItens; i++)
-            {
-                cadastrarItem(estoque + i, i + 1);
-            }
+            estoque = temp;
 
-            printf("\nCadastro realizado com sucesso!\n");
-            break;
+            for (int i = qtdItens; i < qtdItens + novosItens; i++)
+            {
+                cadastrarItem(
+                    &estoque[i],
+                    i + 1
+                ):
+            }
+            qtdItens += novosItens; 
+
+            print("\nProdutos cadastrados com sucesso!\n");
+            
+              break;
 
         case 2:
 
