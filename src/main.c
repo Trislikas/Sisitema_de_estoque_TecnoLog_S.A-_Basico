@@ -3,6 +3,7 @@
 #include <locale.h>
 
 #include "estoque.h"
+#include "validacoes.h"
 
 int main()
 {

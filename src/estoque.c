@@ -138,7 +138,7 @@ if (indice == -1)
     {
         printf("Preco invalido!\n");
         limparBufferEntrada();
-        print("Novo perco: ");
+        printf("Novo perco: ");
     }
 
     printf("\nProduto atalizado com sucesso!\n");
