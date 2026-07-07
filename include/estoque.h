@@ -23,6 +23,8 @@ int buscarProduto(Item *estoque, int qtdItens, const char nome[]);
 
 void pesquisarProduto(Item *estoque, int qtdItens);
 
+void edidarProduto(Item *estoque, int qtdItens);
+
 
 #endif 
 

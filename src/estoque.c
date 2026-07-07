@@ -92,6 +92,61 @@ void pesquisarProduto(
 }
 
 /*
+    Edita um produto existente.
+*/
+void editarProduto(Item *estoque, int qtdItens)
+{
+    char nome[50];
+    char entradaPreco[20];
+    
+    if (estoque == NULL || qtdItens == 0)
+    {
+        printf("\nNenhum produto cadastrado.\n");
+        return;
+    }
+    
+printf("\nNome do produto que deseja editar: ");
+scanf(" %49[^\n]", nome);
+
+int indice = buscarProduto(estoque, qtdItens, nome);
+
+if (indice == -1)
+{
+    printf("\nProduto nao encontrado.\n");
+    return;
+}
+    printf("\n=============================\n");
+    printf(" EDITAR PRODUTO\n");
+    printf("=============================\n");
+
+    printf("Novo nome: ");
+    scanf(" %49[^\n]", (estoque + indice)->nome);
+
+    (estoque + indice)->quantidade = 
+        lerQuantidadeValida(
+            "Nova quantidade: ",
+            0,
+            "Quantidade invalida!"
+        );
+
+    printf("Novo preco: ");
+
+    while (scanf("%19s", entradaPreco) != 1 || 
+            converterPreco(
+                entradaPreco,
+                &(estoque + indice)->preco) == 0)
+    {
+        printf("Preco invalido!\n");
+        limparBufferEntrada();
+        print("Novo perco: ");
+    }
+
+    printf("\nProduto atalizado com sucesso!\n");
+
+}
+
+
+/*
     Função responsável pelo cadastro de um item.
 */
 void cadastrarItem(Item *item, int numeroItem)
@@ -161,10 +216,11 @@ int lerOpcaoMenu(void)
     printf("1 - Cadastrar estoque\n");
     printf("2 - Exibir relatorio\n");
     printf("3 - Buscar produto\n");
+    printf("4 - Editar produto\n");
     printf("0 - Sair\n");
     printf("Escolha uma opcao: ");
 
-    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 3)
+    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 4)
     {
         printf("Opcao invalida!\n");
         limparBufferEntrada();

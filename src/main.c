@@ -68,6 +68,12 @@ int main()
 
             break;
 
+        case 4:
+            
+            editarProduto(estoque, qtdItens);
+
+            break;
+
         case 0:
 
             printf("\nEncerrando o sistema...\n");
