@@ -9,9 +9,10 @@ int main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-    int opcao;
-    int qtdItens = 0;
     Item *estoque = NULL;
+    int qtdItens = 0;
+    int novosItens = 0;
+    int opcao;
 
     do
     {
@@ -45,12 +46,12 @@ int main()
                 cadastrarItem(
                     &estoque[i],
                     i + 1
-                ):
+                );
             }
             qtdItens += novosItens; 
 
-            print("\nProdutos cadastrados com sucesso!\n");
-            
+            printf("\nProdutos cadastrados com sucesso!\n");
+
               break;
 
         case 2:
