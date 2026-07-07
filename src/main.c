@@ -13,7 +13,7 @@ int main()
     int qtdItens = 0;
     int novosItens = 0;
     int opcao;
-
+    
     do
     {
         opcao = lerOpcaoMenu();
@@ -23,7 +23,7 @@ int main()
         case 1:
 
             novosItens = lerQuantidadeValida(
-                "Qauntos produtos deseja cadastrar? ",
+                "Quantos produtos deseja cadastrar ? ",
                 1,
                 "Quantidade invalida!"
             );
@@ -52,7 +52,7 @@ int main()
 
             printf("\nProdutos cadastrados com sucesso!\n");
 
-              break;
+            break;
 
         case 2:
 
@@ -82,10 +82,11 @@ int main()
         case 0:
 
             printf("\nEncerrando o sistema...\n");
+            
             break;
         }
 
-    } while (opcao != 0);
+    }  while (opcao != 0);
 
     free(estoque);
 
