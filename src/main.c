@@ -62,6 +62,12 @@ int main()
 
             break;
 
+        case 3:
+            
+            pesquisarProduto(estoque, qtdItens);
+
+            break;
+
         case 0:
 
             printf("\nEncerrando o sistema...\n");

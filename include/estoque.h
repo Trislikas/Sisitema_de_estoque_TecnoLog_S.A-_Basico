@@ -17,7 +17,12 @@ void cadastrarItem(Item *item, int numeroItem);
 
 void exibirRelatorio(Item *estoque, int qtdItens);
 
-int lerOpcaoMenu();
+int lerOpcaoMenu(void);
+
+int buscarProduto(Item *estoque, int qtdItens, const char nome[]);
+
+void pesquisarProduto(Item *estoque, int qtdItens);
+
 
 #endif 
 

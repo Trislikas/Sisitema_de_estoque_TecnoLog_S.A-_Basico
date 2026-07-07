@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "estoque.h"
 #include "validacoes.h"
@@ -18,6 +19,76 @@ float calcularEstoque(Item *estoque, int qtdItens)
     }
 
     return total;
+}
+
+/*
+    Procura um produto pelo nome.
+
+    Retorna:
+    - índice do produto encontrado.
+    - -1 caso não exista.
+*/
+int buscarProduto(
+    Item *estoque,
+    int qtdItens,
+    const char nome[])
+{
+    for (int i = 0; i < qtdItens; i++)
+    {
+        if (strcmp((estoque + i)->nome, nome) == 0)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+/*
+    Pesquisa um produto e exibe seus dados.
+*/
+void pesquisarProduto(
+    Item *estoque,
+    int qtdItens)
+{
+    char nome[50];
+
+    if (estoque == NULL || qtdItens == 0)
+    {
+        printf("\nNenhum produto cadastrado.\n");
+        return;
+    }
+
+    printf("\nNome do produto: ");
+    scanf(" %49[^\n]", nome);
+
+    int indice = buscarProduto(
+        estoque,
+        qtdItens,
+        nome);
+
+    if (indice == -1)
+    {
+        printf("\nProduto nao encontrado.\n");
+        return;
+    }
+
+    printf("\n=============================\n");
+    printf(" PRODUTO ENCONTRADO\n");
+    printf("=============================\n");
+
+    printf("Nome........: %s\n",
+           (estoque + indice)->nome);
+
+    printf("Quantidade..: %d\n",
+           (estoque + indice)->quantidade);
+
+    printf("Preco.......: R$ %.2f\n",
+           (estoque + indice)->preco);
+
+    printf("Subtotal....: R$ %.2f\n",
+           (estoque + indice)->quantidade *
+           (estoque + indice)->preco);
 }
 
 /*
@@ -89,10 +160,11 @@ int lerOpcaoMenu(void)
     printf("***************************************\n");
     printf("1 - Cadastrar estoque\n");
     printf("2 - Exibir relatorio\n");
+    printf("3 - Buscar produto\n");
     printf("0 - Sair\n");
     printf("Escolha uma opcao: ");
 
-    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 2)
+    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 3)
     {
         printf("Opcao invalida!\n");
         limparBufferEntrada();
