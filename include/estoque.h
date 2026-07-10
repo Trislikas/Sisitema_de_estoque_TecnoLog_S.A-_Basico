@@ -25,13 +25,6 @@ void pesquisarProduto(Item *estoque, int qtdItens);
 
 void editarProduto(Item *estoque, int qtdItens);
 
+void cadastrarProdutos(Item **estoque, int *qtdItens);
 
 #endif 
-
-/*
-           estoque.h
-          /         \
-         /           \
-    main.c       estoque.c
-    
-*/

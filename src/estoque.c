@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "estoque.h"
 #include "validacoes.h"
@@ -173,6 +174,49 @@ void cadastrarItem(Item *item, int numeroItem)
         limparBufferEntrada();
         printf("Preco unitario (R$ - use virgula ou ponto): ");
     }
+}
+
+/*
+    Função Cadastrar Produtos 
+*/
+
+void cadastrarProdutos(Item **estoque, int *qtdItens)
+{
+    int novosItens = lerQuantidadeValida(
+        "Quantos produtos deseja cadastrar ? ",
+        1,
+        "Quantidade invalida!"
+    );
+
+    Item *temp = realloc(
+        *estoque,
+        (*qtdItens + novosItens) * sizeof(Item)
+    );
+    
+    if (temp == NULL)
+    {
+        printf("\nErro ao alocar memoria.\n");
+        return;
+    }
+
+    *estoque = temp;
+
+    printf("\n=== DEBUG ===\n");
+    printf("Endereco do estoque: %p\n", (void *)*estoque);
+    printf("Quantidade atual: %d\n", *qtdItens);
+    printf("Novos itens: %d\n", novosItens);
+
+
+    for (int i = *qtdItens; i < *qtdItens + novosItens; i++)
+    {
+        cadastrarItem(
+            &(*estoque)[i], i + 1
+        );
+    }
+
+    *qtdItens += novosItens;
+
+    printf("\nProdutos cadastrados com sucesso!\n");
 }
 
 /*

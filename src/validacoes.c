@@ -34,6 +34,9 @@ int lerQuantidadeValida(
         printf("%s", mensagem);
     }
 
+    limparBufferEntrada();
+
+
     return quantidade;
 }
 

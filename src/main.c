@@ -11,7 +11,6 @@ int main()
 
     Item *estoque = NULL;
     int qtdItens = 0;
-    int novosItens = 0;
     int opcao;
     
     do
@@ -22,35 +21,7 @@ int main()
         {
         case 1:
 
-            novosItens = lerQuantidadeValida(
-                "Quantos produtos deseja cadastrar ? ",
-                1,
-                "Quantidade invalida!"
-            );
-
-            Item *temp = realloc(
-                estoque,
-                (qtdItens + novosItens) * sizeof(Item)
-            );
-            
-            if (temp == NULL)
-            {
-                printf("\nErro ao alocar memoria.\n");
-                break;
-            }
-
-            estoque = temp;
-
-            for (int i = qtdItens; i < qtdItens + novosItens; i++)
-            {
-                cadastrarItem(
-                    &estoque[i],
-                    i + 1
-                );
-            }
-            qtdItens += novosItens; 
-
-            printf("\nProdutos cadastrados com sucesso!\n");
+            cadastrarProdutos(&estoque, &qtdItens);
 
             break;
 
