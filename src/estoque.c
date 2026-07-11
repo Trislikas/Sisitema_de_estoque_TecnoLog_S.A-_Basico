@@ -64,7 +64,7 @@ void executarSistema(void)
     Função responsável por calcular o valor total
     do estoque.
 */
-float calcularEstoque(Item *estoque, int qtdItens)
+float calcularEstoque(const Item *estoque, int qtdItens)
 {
     float total = 0.0f;
 
@@ -103,9 +103,7 @@ int buscarProduto(
 /*
     Pesquisa um produto e exibe seus dados.
 */
-void pesquisarProduto(
-    Item *estoque,
-    int qtdItens)
+void pesquisarProduto(const Item *estoque, int qtdItens)
 {
     char nome[50];
 
@@ -188,7 +186,7 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
 /*
     Exibe o relatório do estoque.
 */
-void exibirRelatorio(Item *estoque, int qtdItens)
+void exibirRelatorio(const Item *estoque, int qtdItens)
 {
     float valorTotal = calcularEstoque(estoque, qtdItens);
 
