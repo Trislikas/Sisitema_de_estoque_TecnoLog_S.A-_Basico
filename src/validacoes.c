@@ -3,6 +3,7 @@
 
 #include "validacoes.h"
 
+
 /*
     Limpa o buffer de entrada do teclado.
 */

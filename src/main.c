@@ -2,6 +2,7 @@
 #include <locale.h>
 
 #include "estoque.h"
+#include "produto.h"
 
 int main(void)
 {
