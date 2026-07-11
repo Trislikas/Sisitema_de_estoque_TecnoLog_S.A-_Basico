@@ -18,7 +18,6 @@ void cadastrarItem(Item *item, int numeroItem)
 
     printf("Nome: ");
     scanf(" %49[^\n]", item->nome);
-    scanf("%19s", entradaPreco);
 
     item->quantidade = lerQuantidadeValida(
         "Quantidade: ",

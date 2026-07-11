@@ -79,19 +79,12 @@ float calcularEstoque(const Item *estoque, int qtdItens)
 
 /*
     Procura um produto pelo nome.
-
-    Retorna:
-    - índice do produto encontrado.
-    - -1 caso não exista.
 */
-int buscarProduto(
-    Item *estoque,
-    int qtdItens,
-    const char nome[])
+int buscarProduto(const Item *estoque, int qtdItens, const char nome[])
 {
     for (int i = 0; i < qtdItens; i++)
     {
-        if (strcmp((estoque + i)->nome, nome) == 0)
+        if (compararIgnorandoMaiusculas(nome, estoque[i].nome))
         {
             return i;
         }

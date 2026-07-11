@@ -11,7 +11,7 @@ void exibirRelatorio(const Item *estoque, int qtdItens);
 
 int lerOpcaoMenu(void);
 
-int buscarProduto(Item *estoque, int qtdItens, const char nome[]);
+int buscarProduto(const Item *estoque, int qtdItens, const char nome[]);
 
 void pesquisarProduto(const Item *estoque, int qtdItens);
 

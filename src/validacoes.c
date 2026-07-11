@@ -101,3 +101,24 @@ int converterPreco(
 
     return 1;
 }
+
+/*
+    Compara duas strings ignorando letras maiúsculas e minúsculas.
+    Retorna 1 se forem iguais e 0 caso contrário.
+*/
+int compararIgnorandoMaiusculas(const char *texto1, const char *texto2)
+{
+    while (*texto1 != '\0' && *texto2 != '\0')
+    {
+        if (tolower((unsigned char)*texto1) !=
+            tolower((unsigned char)*texto2))
+        {
+            return 0;
+        }
+
+        texto1++;
+        texto2++;
+    }
+
+    return *texto1 == '\0' && *texto2 == '\0';
+}

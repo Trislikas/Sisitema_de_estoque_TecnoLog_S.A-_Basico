@@ -24,4 +24,10 @@ int converterPreco(
     float *preco
 );
 
+/*
+      Comparar os nomes 
+*/
+
+int compararIgnorandoMaiusculas(const char *texto1, const char *texto2);
+
 #endif
