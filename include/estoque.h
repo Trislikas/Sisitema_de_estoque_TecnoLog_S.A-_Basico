@@ -11,6 +11,8 @@ typedef struct
 
 /* Funções do sistema */
 
+void executarSistema(void);
+
 float calcularEstoque(Item *estoque, int qtdItens);
 
 void cadastrarItem(Item *item, int numeroItem);

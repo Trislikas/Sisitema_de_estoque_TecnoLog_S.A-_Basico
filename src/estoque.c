@@ -6,6 +6,60 @@
 #include "validacoes.h"
 
 /*
+    executar Sistema
+*/
+
+void executarSistema(void)
+ {
+
+    Item *estoque = NULL;
+    int qtdItens = 0;
+    int opcao;
+    
+    do
+    {
+        opcao = lerOpcaoMenu();
+
+        switch (opcao)
+        {
+        case 1:
+
+            cadastrarProdutos(&estoque, &qtdItens);
+            break;
+
+        case 2:
+
+            if (estoque == NULL || qtdItens == 0)
+                printf("\nNunhum item cadastrado.\n");
+            else 
+                exibirRelatorio(estoque, qtdItens);
+            break;
+
+        case 3:
+            
+            pesquisarProduto(estoque, qtdItens);
+            break;
+
+        case 4:
+            
+            editarProduto(estoque, qtdItens);
+            break;
+
+        case 0:
+
+            printf("\nEncerrando o sistema...\n");
+           
+            break;
+        }
+
+    }  while (opcao != 0);
+
+    free(estoque);
+
+ }
+
+
+/*
     Função responsável por calcular o valor total
     do estoque.
 */
@@ -200,12 +254,6 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
     }
 
     *estoque = temp;
-
-    printf("\n=== DEBUG ===\n");
-    printf("Endereco do estoque: %p\n", (void *)*estoque);
-    printf("Quantidade atual: %d\n", *qtdItens);
-    printf("Novos itens: %d\n", novosItens);
-
 
     for (int i = *qtdItens; i < *qtdItens + novosItens; i++)
     {
