@@ -12,12 +12,13 @@
 */
 void cadastrarItem(Item *item, int numeroItem)
 {
-    char entradaPreco[20];
+    char entradaPreco[TAM_PRECO];
 
     printf("\n*** Item %d ***\n", numeroItem);
 
     printf("Nome: ");
     scanf(" %49[^\n]", item->nome);
+    scanf("%19s", entradaPreco);
 
     item->quantidade = lerQuantidadeValida(
         "Quantidade: ",
@@ -41,8 +42,8 @@ void cadastrarItem(Item *item, int numeroItem)
 */
 void editarProduto(Item *estoque, int qtdItens)
 {
-    char nome[50];
-    char entradaPreco[20];
+    char nome[TAM_NOME];
+    char entradaPreco[TAM_PRECO];
     
     if (estoque == NULL || qtdItens == 0)
     {
