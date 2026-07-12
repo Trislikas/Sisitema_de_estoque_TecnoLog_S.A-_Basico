@@ -6,6 +6,7 @@
 #include "validacoes.h"
 #include "produto.h"
 #include "interface.h"
+#include "arquivo.h"
 
 /*
     executar Sistema
@@ -16,6 +17,7 @@ void executarSistema(void)
 
     Item *estoque = NULL;
     int qtdItens = 0;
+    carregarEstoque( &estoque, &qtdItens);
     int opcao;
     
     do
@@ -45,6 +47,8 @@ void executarSistema(void)
         case 4:
             
             editarProduto(estoque, qtdItens);
+
+            salvarEstoque(estoque,qtdItens);
             break;
 
         case 0:
@@ -174,6 +178,8 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
     }
 
     *qtdItens += novosItens;
+
+    salvarEstoque( *estoque, *qtdItens); 
 
    exibirMensagemSucesso(
         "Produtos cadastrados com sucesso!"
