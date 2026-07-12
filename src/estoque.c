@@ -5,6 +5,7 @@
 #include "estoque.h"
 #include "validacoes.h"
 #include "produto.h"
+#include "interface.h"
 
 /*
     executar Sistema
@@ -31,7 +32,7 @@ void executarSistema(void)
         case 2:
 
             if (estoque == NULL || qtdItens == 0)
-                printf("\nNunhum item cadastrado.\n");
+                exibirMensagemErro("Nenhum item cadastrado.");
             else 
                 exibirRelatorio(estoque, qtdItens);
             break;
@@ -102,7 +103,8 @@ void pesquisarProduto(const Item *estoque, int qtdItens)
 
     if (estoque == NULL || qtdItens == 0)
     {
-        printf("\nNenhum produto cadastrado.\n");
+        exibirMensagemErro("Nenhum item cadastrado.");
+
         return;
     }
 
@@ -158,7 +160,7 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
     
     if (temp == NULL)
     {
-        printf("\nErro ao alocar memoria.\n");
+        exibirMensagemErro("Erro ao alocar memoria");
         return;
     }
 
@@ -173,7 +175,9 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
 
     *qtdItens += novosItens;
 
-    printf("\nProdutos cadastrados com sucesso!\n");
+   exibirMensagemSucesso(
+        "Produtos cadastrados com sucesso!"
+   );
 }
 
 /*
@@ -183,9 +187,7 @@ void exibirRelatorio(const Item *estoque, int qtdItens)
 {
     float valorTotal = calcularEstoque(estoque, qtdItens);
 
-    printf("\n*************************************\n");
-    printf("        RELATORIO DE ESTOQUE\n");
-    printf("*************************************\n");
+    exibirTitulo("RELATORIO DE ESTOQUE");
 
     for (int i = 0; i < qtdItens; i++)
     {
@@ -209,24 +211,11 @@ void exibirRelatorio(const Item *estoque, int qtdItens)
 */
 int lerOpcaoMenu(void)
 {
-    int opcao;
+    exibirMenu();
 
-    printf("\n***************************************\n");
-    printf("     SISTEMA DE ESTOQUE TecnoLog S.A\n");
-    printf("***************************************\n");
-    printf("1 - Cadastrar estoque\n");
-    printf("2 - Exibir relatorio\n");
-    printf("3 - Buscar produto\n");
-    printf("4 - Editar produto\n");
-    printf("0 - Sair\n");
-    printf("Escolha uma opcao: ");
-
-    while (scanf("%d", &opcao) != 1 || opcao < 0 || opcao > 4)
-    {
-        printf("Opcao invalida!\n");
-        limparBufferEntrada();
-        printf("Escolha uma opcao: ");
-    }
-
-    return opcao;
+    return lerQuantidadeValida(
+        "Escolha uma opção: ",
+        0,
+        "Opção inválida!"
+    );
 }
