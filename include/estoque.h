@@ -13,6 +13,8 @@ int lerOpcaoMenu(void);
 
 int buscarProduto(const Item *estoque, int qtdItens, const char nome[]);
 
+int buscarProdutoParcial(const Item *estoque, int qtdItens, const char termo[]);
+
 void pesquisarProduto(const Item *estoque, int qtdItens);
 
 void cadastrarProdutos(Item **estoque, int *qtdItens);
@@ -20,5 +22,7 @@ void cadastrarProdutos(Item **estoque, int *qtdItens);
 void excluirProduto(Item **estoque, int *qtdItens);
 
 void movimentarEstoque(Item *estoque, int qtdItens);
+
+
 
 #endif 

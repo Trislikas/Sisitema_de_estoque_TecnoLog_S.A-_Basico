@@ -109,6 +109,18 @@ int buscarProduto(const Item *estoque, int qtdItens, const char nome[])
     return -1;
 }
 
+int buscarProdutoParcial(const Item *estoque, int qtdItens,const char termo[])
+{
+    for(int i = 0; i < qtdItens; i++)
+    {
+        if(strstr(estoque[i].nome, termo) != NULL)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
 /*
     Pesquisa um produto e exibe seus dados.
 */
@@ -126,7 +138,7 @@ void pesquisarProduto(const Item *estoque, int qtdItens)
     printf("\nNome do produto: ");
     scanf(" %49[^\n]", nome);
 
-    int indice = buscarProduto(
+    int indice = buscarProdutoParcial(
         estoque,
         qtdItens,
         nome);
