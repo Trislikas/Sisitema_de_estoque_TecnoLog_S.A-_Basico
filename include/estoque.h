@@ -19,4 +19,6 @@ void cadastrarProdutos(Item **estoque, int *qtdItens);
 
 void excluirProduto(Item **estoque, int *qtdItens);
 
+void movimentarEstoque(Item *estoque, int qtdItens);
+
 #endif 

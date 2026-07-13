@@ -57,6 +57,11 @@ void executarSistema(void)
             excluirProduto(&estoque, &qtdItens);
             break;
 
+        case 6:
+            
+            movimentarEstoque(estoque, qtdItens);
+            break;
+
         case 0:
 
             printf("\nEncerrando o sistema...\n");
@@ -285,6 +290,63 @@ void excluirProduto(Item **estoque, int *qtdItens)
     salvarEstoque(*estoque, *qtdItens);
 
     exibirMensagemSucesso("Produto excluido com sucesso!");
+}
+
+/*
+     movimentar estoque entrda e saida
+*/
+
+void movimentarEstoque(Item *estoque, int qtdItens)
+{
+    if (estoque == NULL || qtdItens == 0)
+    {
+        exibirMensagemErro("Nenhum produto cadastrado.");
+        return;
+    }
+
+    char nome[TAM_NOME];
+
+    printf("\nNome do produto: ");
+    scanf(" %49[^\n]", nome);
+
+    int indice = buscarProduto(estoque, qtdItens, nome);
+
+    if (indice == -1)
+    {
+        exibirMensagemErro("Produto nâo encontrado.");
+        return;
+    }
+
+    printf("\nProduto: %s\n", estoque[indice].nome);
+    printf("Quantidade atual: %d\n", estoque[indice].quantidade);
+    printf("Preco: R$ %.2f\n", estoque[indice].preco);
+
+    int movimentacao;
+
+    printf("\nMovimenracao (+ adiciona / - retira): ");
+
+    while (scanf("%d", &movimentacao) != 1)
+    {
+        limparBufferEntrada();
+
+        printf("Valor invalido.\n");
+        printf("Movimentação: ");
+    }
+
+    int novaQuantidade = estoque[indice].quantidade + movimentacao;
+
+    if (novaQuantidade < 0)
+    {
+        exibirMensagemErro("Estoque inseficiente.");
+        return;
+    }
+
+    estoque[indice].quantidade = novaQuantidade;
+
+    salvarEstoque(estoque, qtdItens);
+
+    exibirMensagemSucesso("Movimentação realizada com sucesso!");
+
 }
 
 /*

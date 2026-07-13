@@ -13,6 +13,7 @@ void exibirMenu(void)
     printf("3 - Pesquisar produto\n");
     printf("4 - Editar produto\n");
     printf("5 - Excluir produto\n");
+    printf("6 - Movimentar estoque\n");
     printf("0 - Sair\n");
 
     exibirSeparador();
