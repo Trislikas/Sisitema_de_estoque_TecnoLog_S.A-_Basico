@@ -17,4 +17,6 @@ void pesquisarProduto(const Item *estoque, int qtdItens);
 
 void cadastrarProdutos(Item **estoque, int *qtdItens);
 
+void excluirProduto(Item **estoque, int *qtdItens);
+
 #endif 

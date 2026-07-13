@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdlib.h>
 
 #include "estoque.h"
@@ -49,6 +50,11 @@ void executarSistema(void)
             editarProduto(estoque, qtdItens);
 
             salvarEstoque(estoque,qtdItens);
+            break;
+
+        case 5:
+
+            excluirProduto(&estoque, &qtdItens);
             break;
 
         case 0:
@@ -210,6 +216,75 @@ void exibirRelatorio(const Item *estoque, int qtdItens)
     printf("\n*************************************\n");
     printf("VALOR TOTAL DO ESTOQUE: R$ %.2f\n", valorTotal);
     printf("*************************************\n");
+}
+
+/*
+    exluir Produto 
+*/
+
+void excluirProduto(Item **estoque, int *qtdItens)
+
+{
+
+    if (*estoque == NULL || *qtdItens == 0)
+    {
+        exibirMensagemErro("Nenhum produto cadastrado.");
+            return;
+    }
+    char nome[TAM_NOME];
+
+    printf("\nNome do produto: ");
+    scanf(" %49[^\n]", nome);
+
+    int indice = buscarProduto(
+        *estoque, *qtdItens, nome);
+
+    if (indice == -1)
+    {
+        exibirMensagemErro("Produti não encontrado.");
+
+            return;
+    }
+
+    printf("\nProduto encontrado:\n");
+    printf("Nome: %s\n", (*estoque)[indice].nome);
+    printf("Quantidade: %d\n", (*estoque)[indice].quantidade);
+    printf("Preco: R$ %.2f\n", (*estoque)[indice].preco);
+
+    char resposta;
+        printf("\nDeseja excluir este produto? (S/N): ");
+        scanf(" %c", &resposta);
+    
+    if (toupper((unsigned char)resposta) != 'S')
+    {
+        printf("\nOperação cancelada.\n");
+        return;
+    }
+
+    for (int i = indice; i < *qtdItens - 1; i++ )
+    {
+        (*estoque)[i] = (*estoque)[i + 1];
+    }
+    
+    (*qtdItens) --;
+
+    if (*qtdItens == 0)
+    {
+        free (*estoque);
+        *estoque = NULL;
+    }
+
+    else
+    {
+        Item *temp = realloc(
+            *estoque,
+            (*qtdItens) * sizeof(Item)
+        );
+    }
+
+    salvarEstoque(*estoque, *qtdItens);
+
+    exibirMensagemSucesso("Produto excluido com sucesso!");
 }
 
 /*
