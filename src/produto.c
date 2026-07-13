@@ -10,14 +10,14 @@
 /*
     Função responsável pelo cadastro de um item.
 */
-void cadastrarItem(Item *item, int numeroItem)
+void cadastrarItem(Item *item, int numeroItem, const Item *estoque, int qtdItens)
 {
     char entradaPreco[TAM_PRECO];
 
     printf("\n*** Item %d ***\n", numeroItem);
 
     printf("Nome: ");
-    scanf(" %49[^\n]", item->nome);
+   lerNomeValido(item->nome, TAM_NOME, estoque, qtdItens);
 
     item->quantidade = lerQuantidadeValida(
         "Quantidade: ",

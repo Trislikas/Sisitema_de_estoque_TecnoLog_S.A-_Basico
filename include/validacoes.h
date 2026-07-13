@@ -1,6 +1,8 @@
 #ifndef VALIDACOES_H
 #define VALIDACOES_H
 
+#include "produto.h"
+
 /*
     Limpa o buffer de entrada do teclado.
 */
@@ -29,5 +31,15 @@ int converterPreco(
 */
 
 int compararIgnorandoMaiusculas(const char *texto1, const char *texto2);
+
+/*
+    Validar nomes de produtos vazios 
+*/
+
+int nomeProdutoValido(const char nome[]);
+
+int produtoJaExiste(const Item *estoque, int qtdItens, const char nome[]);
+
+void lerNomeValido(char nome[], int tamanho, const Item *estoque, int qtdItens);
 
 #endif

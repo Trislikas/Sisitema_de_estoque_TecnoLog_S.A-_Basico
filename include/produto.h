@@ -14,6 +14,6 @@ typedef struct
 
 void editarProduto(Item *estoque, int qtdItens);
 
-void cadastrarItem(Item *item, int numeroItem);
+void cadastrarItem(Item *item, int numeroItem, const Item *estoque, int qtdItens);
 
 #endif

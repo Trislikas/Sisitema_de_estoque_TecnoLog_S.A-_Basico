@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#include "estoque.h"
 #include "validacoes.h"
 
 
@@ -121,4 +122,51 @@ int compararIgnorandoMaiusculas(const char *texto1, const char *texto2)
     }
 
     return *texto1 == '\0' && *texto2 == '\0';
+}
+
+/*
+      Validação de nomes e produtos vazios 
+*/
+
+
+int nomeProdutoValido(const char nome[])
+{
+    int temLetra = 0;
+
+    for (int i = 0; nome [i] != '\0'; i++)
+    {
+        if (isalpha((unsigned char)nome[i]))
+        {
+            temLetra = 1;
+        }
+    }
+
+    return temLetra;
+}
+
+int produtoJaExiste(const Item *estoque, int qtdItens, const char nome[])
+{
+    return buscarProduto(estoque, qtdItens, nome) != -1;
+}
+
+void lerNomeValido(char nome[], int tamanho, const Item *estoque, int qtdItens)
+{
+    while(1)
+    {
+        scanf(" %49[^\n]", nome);
+
+        if (!nomeProdutoValido(nome))
+        {
+            printf("Nome invalido! Digite novamente: ");
+            continue;
+        }
+
+        if (produtoJaExiste(estoque, qtdItens, nome))
+        {
+            printf("Produto ja cadastrado! Digite novamente: ");
+            continue;
+        }
+
+        break;
+    }
 }

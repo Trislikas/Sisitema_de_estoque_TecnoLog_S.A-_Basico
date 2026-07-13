@@ -184,7 +184,9 @@ void cadastrarProdutos(Item **estoque, int *qtdItens)
     for (int i = *qtdItens; i < *qtdItens + novosItens; i++)
     {
         cadastrarItem(
-            &(*estoque)[i], i + 1
+            &(*estoque)[i], i + 1,
+            *estoque, i
+
         );
     }
 
