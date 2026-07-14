@@ -8,6 +8,7 @@
 #include "produto.h"
 #include "interface.h"
 #include "arquivo.h"
+#include "ordenacao.h"
 
 /*
     executar Sistema
@@ -60,6 +61,33 @@ void executarSistema(void)
         case 6:
             
             movimentarEstoque(estoque, qtdItens);
+            break;
+        
+        case 7:
+        
+            ordenarPorNome(estoque, qtdItens);
+
+            salvarEstoque(estoque, qtdItens);
+
+            printf("\nOrdenado por nome!\n");
+            break;
+
+        case 8:
+
+            ordenarPorPreco(estoque, qtdItens);
+            
+            salvarEstoque(estoque, qtdItens);
+
+            printf("\nOrdenado por preço!\n");
+            break;
+
+        case 9:
+
+            ordenarPorQuantidade(estoque, qtdItens);
+            
+            salvarEstoque(estoque, qtdItens);
+
+            printf("\nOrdenado por quandidade!\n");
             break;
 
         case 0:

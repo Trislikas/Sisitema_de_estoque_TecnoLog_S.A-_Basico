@@ -14,6 +14,9 @@ void exibirMenu(void)
     printf("4 - Editar produto\n");
     printf("5 - Excluir produto\n");
     printf("6 - Movimentar estoque\n");
+    printf("7 - Ordenar produtos por nome\n");
+    printf("8 - Ordenar produtos por preço\n");
+    printf("9 - Ordenar produtos por quantidade\n");
     printf("0 - Sair\n");
 
     exibirSeparador();
